@@ -18,6 +18,46 @@
       font-family:"Space Grotesk",sans-serif; color:var(--ink); line-height:1.6;
       background:radial-gradient(circle at 88% 8%,#ffe7e0 0 17%,transparent 18%),radial-gradient(circle at 10% 84%,#d8fff6 0 16%,transparent 17%),var(--bg);
     }
+
+    <!-- SEZIONE 3: sostituisci il blocco "Prova tu stesso: La Sfida della Ricompensa" -->
+<section class="fade-in">
+  <h2>Prova tu stesso: La Sfida della Ricompensa</h2>
+  <article id="simBox" class="card sim-box">
+    <p><strong>Regole:</strong> A dà +1 ogni 5 secondi (prevedibile). B è incerto: 70% zero, 25% premio piccolo, 5% jackpot.</p>
+
+    <div class="buttons" style="justify-content:center">
+      <button class="primary" id="start">Avvia 60 secondi</button>
+      <button id="btn-a" disabled>Pulsante A (Fisso)</button>
+      <button class="secondary" id="btn-b" disabled>Pulsante B (Variabile)</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat timer-urgent">Tempo rimasto<strong id="time">60s</strong></div>
+      <div class="stat">Click A / Click B<strong id="clicks">0 / 0</strong></div>
+      <div class="stat">Punti A / B<strong id="points">0 / 0</strong></div>
+    </div>
+
+    <p id="reflection">Premi “Avvia 60 secondi” e osserva dove clicchi di più.</p>
+
+    <div id="barsWrap" class="bars-wrap">
+      <div class="bars">
+        <div class="bar-row">
+          <strong>Click A</strong>
+          <div class="track"><div id="barA" class="fill a"></div></div>
+          <span id="barALabel">0%</span>
+        </div>
+        <div class="bar-row">
+          <strong>Click B</strong>
+          <div class="track"><div id="barB" class="fill b"></div></div>
+          <span id="barBLabel">0%</span>
+        </div>
+      </div>
+      <p id="compare" class="compare"></p>
+      <p id="schema" class="compare"></p>
+    </div>
+  </article>
+</section>
+
     .container{width:min(1120px,92%);margin:auto} section{padding:5rem 0}
     h1,h2,h3{line-height:1.1;margin:0 0 1rem} h2{font-size:clamp(1.5rem,3vw,2.5rem)}
     h1{font-family:"Archivo Black",sans-serif;font-size:clamp(2rem,5vw,4rem);letter-spacing:-.03em}
@@ -148,39 +188,45 @@
       </div>
     </section>
 
-    <section class="fade-in">
-      <h2>Prova tu stesso: La Sfida della Ricompensa</h2>
-      <article id="simBox" class="card sim-box">
-        <p>Hai 60 secondi. <strong>Pulsante A</strong>: 1 stellina ogni 5 secondi (fisso). <strong>Pulsante B</strong>: stelline casuali in tempi imprevedibili (variabile).</p>
-        <div class="buttons" style="justify-content:center">
-          <button class="primary" id="start">Avvia 1 minuto</button>
-          <button id="btn-a" disabled>Pulsante A (Fisso)</button>
-          <button class="secondary" id="btn-b" disabled>Pulsante B (Variabile)</button>
-        </div>
-        <div class="stats">
-          <div class="stat">Tempo rimasto<strong id="time">60s</strong></div>
-          <div class="stat">Click A / Click B<strong id="clicks">0 / 0</strong></div>
-          <div class="stat">Stelline A / B<strong id="stars">0 / 0</strong></div>
-        </div>
-        <p id="reflection">Premi “Avvia 1 minuto” per iniziare.</p>
+    <!-- SEZIONE 3: sostituisci il blocco "Prova tu stesso: La Sfida della Ricompensa" -->
+<section class="fade-in">
+  <h2>Prova tu stesso: La Sfida della Ricompensa</h2>
+  <article id="simBox" class="card sim-box">
+    <p><strong>Regole:</strong> A dà +1 ogni 5 secondi (prevedibile). B è incerto: 70% zero, 25% premio piccolo, 5% jackpot.</p>
 
-        <div id="barsWrap" class="bars-wrap">
-          <div class="bars">
-            <div class="bar-row">
-              <strong>Pulsante A</strong>
-              <div class="track"><div id="barA" class="fill a"></div></div>
-              <span id="barALabel">0%</span>
-            </div>
-            <div class="bar-row">
-              <strong>Pulsante B</strong>
-              <div class="track"><div id="barB" class="fill b"></div></div>
-              <span id="barBLabel">0%</span>
-            </div>
-          </div>
-          <p id="compare" class="compare"></p>
+    <div class="buttons" style="justify-content:center">
+      <button class="primary" id="start">Avvia 60 secondi</button>
+      <button id="btn-a" disabled>Pulsante A (Fisso)</button>
+      <button class="secondary" id="btn-b" disabled>Pulsante B (Variabile)</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat timer-urgent">Tempo rimasto<strong id="time">60s</strong></div>
+      <div class="stat">Click A / Click B<strong id="clicks">0 / 0</strong></div>
+      <div class="stat">Punti A / B<strong id="points">0 / 0</strong></div>
+    </div>
+
+    <p id="reflection">Premi “Avvia 60 secondi” e osserva dove clicchi di più.</p>
+
+    <div id="barsWrap" class="bars-wrap">
+      <div class="bars">
+        <div class="bar-row">
+          <strong>Click A</strong>
+          <div class="track"><div id="barA" class="fill a"></div></div>
+          <span id="barALabel">0%</span>
         </div>
-      </article>
-    </section>
+        <div class="bar-row">
+          <strong>Click B</strong>
+          <div class="track"><div id="barB" class="fill b"></div></div>
+          <span id="barBLabel">0%</span>
+        </div>
+      </div>
+      <p id="compare" class="compare"></p>
+      <p id="schema" class="compare"></p>
+    </div>
+  </article>
+</section>
+
 
     <section class="fade-in">
       <h2>Fuga dalla Gabbia: Riprendi il Controllo</h2>
