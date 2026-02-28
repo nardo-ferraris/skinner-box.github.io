@@ -306,89 +306,173 @@
     ["mouseup","mouseleave","touchend","touchcancel"].forEach(evt=>pullArea.addEventListener(evt,end,{passive:true}));
 
     // Simulazione 60s
-    const simBox = document.getElementById("simBox");
-    const startBtn = document.getElementById("start"), btnA = document.getElementById("btn-a"), btnB = document.getElementById("btn-b");
-    const timeEl = document.getElementById("time"), clicksEl = document.getElementById("clicks"), starsEl = document.getElementById("stars"), reflectionEl = document.getElementById("reflection");
-    const barsWrap = document.getElementById("barsWrap"), barA = document.getElementById("barA"), barB = document.getElementById("barB"), barALabel = document.getElementById("barALabel"), barBLabel = document.getElementById("barBLabel"), compare = document.getElementById("compare");
+    <script>
+  // === SFIDA DELLA RICOMPENSA: motore completo ===
+  const GAME_SECONDS = 60;
+  const FIXED_COOLDOWN_MS = 5000;
 
-    let running=false, remaining=60, clicksA=0, clicksB=0, starsA=0, starsB=0, fixedReady=true, timer=null;
-    function updateUI(){timeEl.textContent=remaining+"s"; clicksEl.textContent=clicksA+" / "+clicksB; starsEl.textContent=starsA+" / "+starsB;}
+  const simBox = document.getElementById("simBox");
+  const startBtn = document.getElementById("start");
+  const btnA = document.getElementById("btn-a");
+  const btnB = document.getElementById("btn-b");
 
-    function burst(x,y){
-      const icons=["⭐","🎉","✨"];
-      for(let i=0;i<12;i++){
-        const s=document.createElement("span");
-        s.className="particle"; s.textContent=icons[Math.floor(Math.random()*icons.length)];
-        s.style.left=x+"px"; s.style.top=y+"px";
-        s.style.setProperty("--dx",(Math.random()*180-90)+"px");
-        s.style.setProperty("--dy",(-40-Math.random()*150)+"px");
-        simBox.appendChild(s);
-        setTimeout(()=>s.remove(),700);
-      }
-      simBox.classList.remove("hit-flash");
-      void simBox.offsetWidth;
-      simBox.classList.add("hit-flash");
-    }
+  const timeEl = document.getElementById("time");
+  const clicksEl = document.getElementById("clicks");
+  const pointsEl = document.getElementById("points");
+  const reflectionEl = document.getElementById("reflection");
 
-    function renderBars(){
-      const total = clicksA + clicksB;
-      const aPct = total ? Math.round((clicksA/total)*100) : 0;
-      const bPct = total ? Math.round((clicksB/total)*100) : 0;
-      barA.style.width = aPct+"%"; barB.style.width = bPct+"%";
-      barALabel.textContent=aPct+"%"; barBLabel.textContent=bPct+"%";
-      barsWrap.style.display="block";
+  const barsWrap = document.getElementById("barsWrap");
+  const barA = document.getElementById("barA");
+  const barB = document.getElementById("barB");
+  const barALabel = document.getElementById("barALabel");
+  const barBLabel = document.getElementById("barBLabel");
+  const compareEl = document.getElementById("compare");
+  const schemaEl = document.getElementById("schema");
 
-      if(clicksA===0 && clicksB===0){
-        compare.textContent="Nessun click registrato.";
-      }else if(clicksA===0){
-        compare.textContent="Hai cliccato sul pulsante B molto più di A. L'imprevedibilità ha guidato il comportamento.";
-      }else{
-        const more = Math.round(((clicksB-clicksA)/clicksA)*100);
-        if(more>0){
-          compare.textContent=`Hai cliccato sul pulsante B il ${more}% di volte in più rispetto ad A. Proprio come i piccioni di Skinner, la mente viene catturata dall’imprevedibilità.`;
-        }else{
-          compare.textContent="Hai preferito A o li hai usati in modo simile. Ottimo confronto: il tuo pattern è più controllato.";
-        }
-      }
-    }
+  let running = false;
+  let remaining = GAME_SECONDS;
+  let timerId = null;
 
-    function endGame(){
-      running=false; btnA.disabled=true; btnB.disabled=true; startBtn.disabled=false;
-      const preferred = clicksB>clicksA ? "B (variabile)" : clicksA>clicksB ? "A (fisso)" : "entrambi in modo simile";
-      reflectionEl.textContent = "Tempo finito. Hai cliccato di più su "+preferred+".";
-      renderBars();
-    }
+  let clicksA = 0, clicksB = 0;
+  let pointsA = 0, pointsB = 0;
 
-    function startGame(){
-      clearInterval(timer);
-      running=true; remaining=60; clicksA=clicksB=starsA=starsB=0; fixedReady=true;
-      btnA.disabled=false; btnB.disabled=false; startBtn.disabled=true; barsWrap.style.display="none";
-      reflectionEl.textContent="Test in corso: osserva dove torna la tua attenzione."; updateUI();
-      timer=setInterval(()=>{
-        remaining--;
-        if(remaining%5===0) fixedReady=true;
-        updateUI();
-        if(remaining<=0){ clearInterval(timer); endGame(); }
-      },1000);
-    }
+  let nextARewardAt = 0;
 
-    startBtn.onclick=startGame;
-    btnA.onclick=()=>{ if(!running) return; clicksA++; if(fixedReady){starsA+=1; fixedReady=false;} updateUI(); };
-    btnB.onclick=(e)=>{
-      if(!running) return;
-      clicksB++;
-      const rewards=[0,10,5,0,3,0,7], win=Math.random()>.45;
-      if(win){
-        const value = rewards[Math.floor(Math.random()*rewards.length)];
-        starsB += value;
-        if(value>0){
-          const rect = simBox.getBoundingClientRect();
-          const b = e.target.getBoundingClientRect();
-          burst(b.left - rect.left + b.width/2, b.top - rect.top + b.height/2);
-        }
-      }
+  function updateUI() {
+    timeEl.textContent = remaining + "s";
+    clicksEl.textContent = clicksA + " / " + clicksB;
+    pointsEl.textContent = pointsA + " / " + pointsB;
+  }
+
+  function floatReward(text, targetBtn, type) {
+    const simRect = simBox.getBoundingClientRect();
+    const btnRect = targetBtn.getBoundingClientRect();
+    const el = document.createElement("span");
+    el.className = "float-reward " + type;
+    el.textContent = text;
+    el.style.left = (btnRect.left - simRect.left + btnRect.width / 2) + "px";
+    el.style.top = (btnRect.top - simRect.top + 8) + "px";
+    simBox.appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  }
+
+  function shake(btn, jackpot = false) {
+    btn.classList.remove("shake", "shake-jackpot");
+    void btn.offsetWidth;
+    btn.classList.add(jackpot ? "shake-jackpot" : "shake");
+  }
+
+  function startGame() {
+    clearInterval(timerId);
+    running = true;
+    remaining = GAME_SECONDS;
+    clicksA = clicksB = 0;
+    pointsA = pointsB = 0;
+
+    nextARewardAt = Date.now() + FIXED_COOLDOWN_MS;
+
+    btnA.disabled = false;
+    btnB.disabled = false;
+    startBtn.disabled = true;
+    barsWrap.style.display = "none";
+
+    reflectionEl.textContent = "Test in corso: la pressione del tempo aumenta l'impulso al click.";
+    updateUI();
+
+    timerId = setInterval(() => {
+      remaining -= 1;
       updateUI();
-    };
+      if (remaining <= 0) {
+        clearInterval(timerId);
+        endGame();
+      }
+    }, 1000);
+  }
+
+  function renderBars() {
+    const total = clicksA + clicksB;
+    const aPct = total ? Math.round((clicksA / total) * 100) : 0;
+    const bPct = total ? Math.round((clicksB / total) * 100) : 0;
+
+    barA.style.width = aPct + "%";
+    barB.style.width = bPct + "%";
+    barALabel.textContent = aPct + "%";
+    barBLabel.textContent = bPct + "%";
+    barsWrap.style.display = "block";
+  }
+
+  function endGame() {
+    running = false;
+    btnA.disabled = true;
+    btnB.disabled = true;
+    startBtn.disabled = false;
+
+    const ratio = clicksA === 0 ? (clicksB > 0 ? Infinity : 1) : (clicksB / clicksA);
+    const ratioText = ratio === Infinity ? "∞" : ratio.toFixed(2);
+
+    if (clicksB > clicksA * 1.5) {
+      reflectionEl.textContent =
+        "Il tuo cervello è stato catturato dal Jackpot. Hai ignorato la certezza del Pulsante A per inseguire la scarica di dopamina di B.";
+    } else {
+      reflectionEl.textContent =
+        "Hai mantenuto un pattern più bilanciato. Il rinforzo variabile è comunque progettato per trascinare l'attenzione.";
+    }
+
+    compareEl.textContent = `Rapporto click B/A: ${ratioText} (A: ${clicksA}, B: ${clicksB})`;
+    schemaEl.innerHTML =
+      "Schema del gioco: 1) A = +1 solo ogni 5s, click anticipati = 0. " +
+      "2) B = 70% zero, 25% premio 1-3, 5% jackpot +20. " +
+      "3) L'imprevedibilità aumenta il re-try compulsivo.";
+    renderBars();
+  }
+
+  startBtn.addEventListener("click", startGame);
+
+  btnA.addEventListener("click", () => {
+    if (!running) return;
+    clicksA++;
+    const now = Date.now();
+
+    if (now >= nextARewardAt) {
+      pointsA += 1;
+      nextARewardAt = now + FIXED_COOLDOWN_MS;
+      floatReward("+1", btnA, "a");
+    } else {
+      // feedback minimo e grigio
+      floatReward("0", btnA, "a");
+    }
+    updateUI();
+  });
+
+  btnB.addEventListener("click", () => {
+    if (!running) return;
+    clicksB++;
+
+    const roll = Math.random() * 100;
+    let reward = 0;
+    let jackpot = false;
+
+    if (roll < 70) {
+      reward = 0;
+    } else if (roll < 95) {
+      reward = 1 + Math.floor(Math.random() * 3); // 1-3
+    } else {
+      reward = 20;
+      jackpot = true;
+    }
+
+    if (reward > 0) {
+      pointsB += reward;
+      shake(btnB, jackpot);
+      floatReward("+" + reward + "⭐", btnB, jackpot ? "jackpot" : "b");
+    } else {
+      floatReward("0", btnB, "b");
+    }
+
+    updateUI();
+  });
+</script>
+
   </script>
 </body>
 </html>
