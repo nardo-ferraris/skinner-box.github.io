@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Esperimento di Skinner | La Gabbia Invisibile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Archivo+Black&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/common.js"></script>
+  <script defer src="assets/skinner.js"></script>
+</head>
+<body data-page="skinner">
+  <header class="site-header">
+    <div class="container header-wrap">
+      <a class="brand" href="home.html">La Gabbia Invisibile</a>
+      <nav class="menu" aria-label="Menu principale">
+        <a href="home.html" data-nav="home">Home</a>
+        <a href="skinner.html" data-nav="skinner">Skinner</a>
+        <a href="social.html" data-nav="social">Social</a>
+        <a href="sfida.html" data-nav="sfida">Sfida</a>
+        <a href="fuga.html" data-nav="fuga">Controllo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="reveal">
+      <span class="kicker">Pagina 2</span>
+      <h2>Il Classico: l’esperimento di Skinner</h2>
+      <p>
+        Il <strong>condizionamento operante</strong> dice una cosa semplice: se un comportamento porta un premio,
+        il cervello tende a ripeterlo.
+      </p>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Cos’è il condizionamento operante</h3>
+          <p>
+            Skinner mise un animale in una scatola con leve e ricompense. Quando l’animale capiva che premere portava cibo,
+            aumentava i tentativi. Il comportamento veniva “modellato” dai risultati.
+          </p>
+          <p>
+            In pratica: <strong>azione → conseguenza → apprendimento</strong>.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Fisso vs variabile</h3>
+          <p>
+            <strong>Ricompensa fissa</strong>: premio regolare e prevedibile. Il sistema diventa “noioso”.
+          </p>
+          <p>
+            <strong>Ricompensa variabile</strong>: premio imprevedibile. L’incertezza accende l’attenzione e spinge al re-try.
+          </p>
+          <p>
+            È il motivo per cui i meccanismi tipo slot risultano così potenti.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <article class="card fixed-lab">
+        <div class="mini-title">Mini esperimento visivo: Premio fisso</div>
+        <p>Premi il pulsante. La ricompensa arriva sempre con la stessa regola temporale.</p>
+        <button id="fixedBtn">Premio fisso</button>
+        <p id="fixedMessage" class="mono-feedback">Sistema pronto.</p>
+
+        <div class="fixed-stats">
+          <div class="stat-chip">Click totali<strong id="fixedClicks">0</strong></div>
+          <div class="stat-chip">Punti<strong id="fixedPoints">0</strong></div>
+          <div class="stat-chip">Prossimo premio<strong id="fixedNext">0.0s</strong></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Questo sito è stato creato per scopi educativi [Nome della Scuola/Classe].</p>
+    </div>
+  </footer>
+</body>
+</html>

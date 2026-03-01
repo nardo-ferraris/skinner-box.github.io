@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sfida della Ricompensa | La Gabbia Invisibile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Archivo+Black&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/common.js"></script>
+  <script defer src="assets/sfida.js"></script>
+</head>
+<body data-page="sfida">
+  <header class="site-header">
+    <div class="container header-wrap">
+      <a class="brand" href="home.html">La Gabbia Invisibile</a>
+      <nav class="menu" aria-label="Menu principale">
+        <a href="home.html" data-nav="home">Home</a>
+        <a href="skinner.html" data-nav="skinner">Skinner</a>
+        <a href="social.html" data-nav="social">Social</a>
+        <a href="sfida.html" data-nav="sfida">Sfida</a>
+        <a href="fuga.html" data-nav="fuga">Controllo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="reveal">
+      <span class="kicker">Pagina 4</span>
+      <h2>La Sfida della Ricompensa</h2>
+      <article id="challengeBoard" class="card challenge-board">
+        <p class="objective">
+          Obiettivo: <strong>raggiungere 60 punti in 60 secondi</strong>.
+          Pulsante A: <strong>+10 punti ogni 10 secondi</strong> (prevedibile).
+        </p>
+
+        <div class="challenge-buttons">
+          <button id="startBtn" class="btn-primary">Avvia 60s</button>
+          <button id="btnA" disabled>Pulsante A (Fisso)</button>
+          <button id="btnB" class="secondary" disabled>Pulsante B (Variabile)</button>
+        </div>
+
+        <p id="aInfo" class="micro-copy">A pronto ogni 10 secondi: +10 punti garantiti.</p>
+
+        <div class="stats-grid">
+          <div class="stat-box timer-alert">Tempo<strong id="timeOut">60s</strong></div>
+          <div class="stat-box">Punti<strong id="pointsOut">0 (A:0 / B:0)</strong></div>
+          <div class="stat-box">Click A / B<strong id="clicksOut">0 / 0</strong></div>
+          <div class="stat-box">Rapporto B/A<strong id="ratioOutLive">1.00</strong></div>
+        </div>
+
+        <div class="goal-wrap">
+          <div class="goal-track">
+            <div id="goalFill" class="goal-fill"></div>
+          </div>
+          <div id="goalLabel" class="goal-label">0 / 60 punti</div>
+        </div>
+
+        <p id="liveMessage" class="live-message">Premi “Avvia 60s” per iniziare.</p>
+
+        <div id="finalBox" class="final-box hidden">
+          <p id="debriefMain"></p>
+          <p id="ratioOut"></p>
+
+          <div class="chart">
+            <div class="chart-row">
+              <strong>Click A</strong>
+              <div class="chart-track"><div id="barA" class="chart-fill chart-fill-a"></div></div>
+              <span id="clickAOut">0</span>
+            </div>
+            <div class="chart-row">
+              <strong>Click B</strong>
+              <div class="chart-track"><div id="barB" class="chart-fill chart-fill-b"></div></div>
+              <span id="clickBOut">0</span>
+            </div>
+          </div>
+
+          <div id="schemaText" class="schema-box"></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Questo sito è stato creato per scopi educativi [Nome della Scuola/Classe].</p>
+    </div>
+  </footer>
+</body>
+</html>

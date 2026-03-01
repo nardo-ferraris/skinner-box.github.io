@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skinner Box e Social | La Gabbia Invisibile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Archivo+Black&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/common.js"></script>
+  <script defer src="assets/social.js"></script>
+</head>
+<body data-page="social">
+  <header class="site-header">
+    <div class="container header-wrap">
+      <a class="brand" href="home.html">La Gabbia Invisibile</a>
+      <nav class="menu" aria-label="Menu principale">
+        <a href="home.html" data-nav="home">Home</a>
+        <a href="skinner.html" data-nav="skinner">Skinner</a>
+        <a href="social.html" data-nav="social">Social</a>
+        <a href="sfida.html" data-nav="sfida">Sfida</a>
+        <a href="fuga.html" data-nav="fuga">Controllo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="reveal">
+      <span class="kicker">Pagina 3</span>
+      <h2>La Skinner Box in tasca: come i social ti catturano</h2>
+      <div class="grid-2">
+        <article class="card">
+          <p>
+            La gabbia è lo smartphone. “Beccare” è scrollare il feed o fare refresh. La ricompensa è la notifica,
+            il like, il contenuto nuovo.
+          </p>
+          <p>
+            Il punto non è solo il premio, ma l’attesa del premio. È lì che il cervello resta agganciato.
+          </p>
+          <p>
+            Esempi: pull-to-refresh tipo slot machine, storie che spariscono, badge rossi.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="mini-title">Pull-to-refresh simulato con ricompensa casuale</div>
+          <p>Trascina verso il basso. Ogni tanto compare un bonus casuale, proprio come nei feed reali.</p>
+
+          <div id="pullArea" class="pull-area">
+            <strong id="pullLabel">Trascina in basso ↓</strong>
+            <div id="spinner" class="spinner"></div>
+            <div id="factBox" class="fact-box">
+              Fatto: il ritardo di 1-2 secondi aumenta l’aspettativa di “nuovo”.
+            </div>
+            <div id="bonusToast" class="bonus-toast">🎁 Bonus casuale!</div>
+          </div>
+
+          <p class="bonus-counter">Bonus casuali ottenuti: <span id="bonusCount">0</span></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Questo sito è stato creato per scopi educativi [Nome della Scuola/Classe].</p>
+    </div>
+  </footer>
+</body>
+</html>
